@@ -39,20 +39,27 @@ class AlienInvasion:
         #Game loop
         while self.running:
             # Watch for keyboard and mouse events.
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.running = False
-                    pygame.quit()
-                    sys.exit()
-            
-            # Draw the background image to the screen.
-            self.screen.blit(self.bg_image, (0, 0))
-            # Draw the ship to the screen.
-            self.ship.draw()
-            # Redraw the screen during each pass through the loop.
-            pygame.display.flip()
+            self._check_events()
+            # Update the screen during each pass through the loop.
+            self._update_screen()
             # Limit the frame rate to the value specified in settings.
             self.clock.tick(self.settings.FPS)
+
+    def _update_screen(self):
+        """Update images on the screen, and flip to the new screen.
+        """
+        self.screen.blit(self.bg_image, (0, 0))
+            # Draw the ship to the screen.
+        self.ship.draw()
+            # Redraw the screen during each pass through the loop.
+        pygame.display.flip()
+
+    def _check_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
+                pygame.quit()
+                sys.exit()
 
 if __name__ == '__main__':
     ai = AlienInvasion()

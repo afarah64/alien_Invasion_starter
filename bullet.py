@@ -9,17 +9,20 @@ class Bullet(Sprite):
     """A class to manage bullets fired from the ship."""
     
     def __init__(self, game: 'AlienInvasion') -> None:
-        """Create a bullet object at the ship's current position."""
+        """Initialize a bullet object at the ship's current position."""
         super().__init__()
         
+        # store a reference to the game instance and its settings and screen attributes
         self.screen = game.screen
         self.settings = game.settings
 
+        # Load the bullet image and scale it to the specified width and height from settings.
         self.image = pygame.image.load(self.settings.bullet_file)
         self.image = pygame.transform.scale(self.image, 
             (self.settings.bullet_width, self.settings.bullet_height)
             )
         
+        # Get the rect of the bullet image and set its midtop to the ship's midtop.
         self.rect = self.image.get_rect()
         self.rect.midtop = game.ship.rect.midtop
         

@@ -30,8 +30,10 @@ class Ship:
         self.moving_right = False
         self.moving_left = False
 
+        # Store a decimal value for the ship's horizontal position.
         self.x = float(self.rect.x)
 
+        # Store a reference to the arsenal instance.    
         self.arsenal = arsenal
 
     def update(self):
@@ -40,13 +42,16 @@ class Ship:
         self.arsenal.update_arsenal()
 
     def _update_ship_movement(self):
+        """Update the ship's position based on the movement flags."""
+          
         temp_speed = self.settings.ship_speed
-
+        #check if ship is moving right and if it is within the right boundary
         if self.moving_right and self.rect.right < self.boundaries.right:
             self.x += temp_speed
+        #check if ship is moving left and if it is within the left boundary    
         if self.moving_left and self.rect.left > self.boundaries.left:
             self.x -= temp_speed
-
+        # Update rect object from self.x.
         self.rect.x = int(self.x)
 
 
@@ -56,5 +61,6 @@ class Ship:
         self.screen.blit(self.image, self.rect) 
     
     def fire(self):
+        """Fire a bullet if limit not reached yet."""
         return self.arsenal.fire_bullet()
         

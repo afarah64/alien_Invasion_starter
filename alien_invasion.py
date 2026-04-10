@@ -28,11 +28,12 @@ class AlienInvasion:
                 (self.settings.screen_width, self.settings.screen_height)
                 )
         
-        
+        # Set the running attribute to True to indicate that the game is active.
         self.running = True
-
+        # Create a clock object to manage the frame rate of the game.
         self.clock = pygame.time.Clock()
 
+        # Initialize the mixer module for sound and load the laser sound effect.
         pygame.mixer.init()
         self.laser_sound = pygame.mixer.Sound(str(self.settings.laser_sound))
         self.laser_sound.set_volume(0.7)
@@ -59,12 +60,13 @@ class AlienInvasion:
         """Update images on the screen, and flip to the new screen.
         """
         self.screen.blit(self.bg_image, (0, 0))
-            # Draw the ship to the screen.
+        # Draw the ship to the screen.
         self.ship.draw()
-            # Redraw the screen during each pass through the loop.
+        # Redraw the screen during each pass through the loop.
         pygame.display.flip()
 
     def _check_events(self):
+        """Respond to keypresses and mouse events."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
@@ -84,15 +86,17 @@ class AlienInvasion:
 
     def _check_keydown_events(self, event: pygame.event.Event):
         """Respond to keypresses."""
+        #checks for right and left arrow keys to set the ship's movement flags accordingly
         if event.key == pygame.K_RIGHT:
             self.ship.moving_right = True
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = True
+        # checking for spacebar to fire a bullet, and giving it a sound effect when fired
         elif event.key == pygame.K_SPACE:
             if self.ship.fire():
                 self.laser_sound.play()
                 self.laser_sound.fadeout(250 )
-             
+        # checking for 'q' key to quit the game     
         elif event.key == pygame.K_q:
             self.running = False
             pygame.quit()

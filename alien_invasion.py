@@ -1,3 +1,9 @@
+""" Alien Invasion - A simple 2D game where the player controls a spaceship to defend against alien invaders.
+    Author: Abdalla Farah
+    Date: 04/10/2026
+"""
+
+
 import sys
 import pygame
 from settings import Settings
@@ -77,7 +83,7 @@ class AlienInvasion:
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
 
-    def _check_keyup_events(self, event: pygame.event.Event):
+    def _check_keyup_events(self, event: pygame.event.Event): 
         """Respond to key releases."""
         if event.key == pygame.K_RIGHT:
             self.ship.moving_right = False

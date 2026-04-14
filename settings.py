@@ -28,6 +28,8 @@ class Settings:
         self.bullet_file = Path.cwd() / 'Assets' / 'images' / 'laserBlast.png'
         self.laser_sound = Path.cwd() / 'Assets' / 'sound' / 'laser.mp3'
         
+        self.impact_sound = Path.cwd() / 'Assets' / 'sound' / 'impactSound.mp3'
+
         self.bullet_speed = 7
         self.bullet_width = 25
         self.bullet_height = 80

@@ -36,7 +36,7 @@ class Alien(Sprite):
 
         temp_speed = self.settings.fleet_speed
         
-        self.x += temp_speed * self.fleet.fleet_directionn
+        self.x += temp_speed * self.fleet.fleet_direction
         self.rect.x = int(self.x)
         self.rect.y = int(self.y)
 

@@ -51,7 +51,7 @@ class AlienInvasion:
         self.ship = Ship(self, Arsenal(self))
 
         self.alien_fleet = AlienFleet(self)
-        self.alien_fleet.create_fleet()
+        self.alien_fleet.create_fleet() 
 
 
 
@@ -62,7 +62,7 @@ class AlienInvasion:
             self._check_events()
             # Update the ship's position based on the movement flags.
             self.ship.update()
-            #self.alien.update()
+            self.alien_fleet.update_fleet()
             # Update the screen during each pass through the loop.
             self._update_screen()
             # Limit the frame rate to the value specified in settings.

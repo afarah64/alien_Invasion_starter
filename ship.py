@@ -25,16 +25,20 @@ class Ship:
         self.boundaries = game.screen.get_rect()
 
         # Start each new ship at the bottom center of the screen.
-        self.rect.midbottom = self.boundaries.midbottom
+        self._center_ship()
 
         self.moving_right = False
         self.moving_left = False
 
         # Store a decimal value for the ship's horizontal position.
-        self.x = float(self.rect.x)
 
         # Store a reference to the arsenal instance.    
         self.arsenal = arsenal
+
+    def _center_ship(self):
+        """ centers the ship """
+        self.rect.midbottom = self.boundaries.midbottom
+        self.x = float(self.rect.x)
 
     def update(self):
         """Update the ship's position based on the movement flags."""
@@ -64,3 +68,10 @@ class Ship:
         """Fire a bullet if limit not reached yet."""
         return self.arsenal.fire_bullet()
         
+    def check_collisions(self, other_group):
+        if pygame.sprite.spritecollideany(self, other_group,):
+            self._center_ship()
+            return True 
+        return False
+    
+   

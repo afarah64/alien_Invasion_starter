@@ -21,32 +21,44 @@ class AlienFleet:
 
     def create_fleet(self):
         alien_width = self.settings.alien_width
+        alien_height = self.settings.alien_height
         screen_width = self.settings.screen_width
+        screen_hight = self.settings.screen_height
 
-        fleet_width = self.calculate_fleet_size(alien_width, screen_width)
+        fleet_width, fleet_height = self.calculate_fleet_size(alien_width, screen_width, alien_height, screen_hight)
 
+        half_screen = self.settings.screen_height // 2
+        
         fleet_horizontal_spac = (fleet_width * alien_width)
+        fleet_vertical_space = (fleet_height * alien_height)
         x_offset = int((screen_width - fleet_horizontal_spac) // 2)
+        y_offset = int((half_screen - fleet_vertical_space) // 2)
+        for row in range(fleet_height):
+            for col in range(fleet_width):
+                current_x = alien_width * col + x_offset
+                current_y = alien_height * row + y_offset
+                if col % 2 == 0 or row % 2 == 0:
+                    continue
+                self._create_alien(current_x, current_y)
 
-        for col in range(fleet_width):
-            current_x = alien_width * col + x_offset
-            if col % 2 == 0:
-                continue
-            self._create_alien(current_x, 10)
 
-
-    def calculate_fleet_size(self, alien_width, screen_width):
+    def calculate_fleet_size(self, alien_width, screen_width, alien_height, screen_height):
         fleet_width = (screen_width // alien_width )
-
+        fleet_height = ((screen_height / 2) // alien_height)
         if fleet_width % 2 == 0:
             fleet_width -= 1
         else:
             fleet_width -= 2
-
-        return fleet_width
         
-    def _create_alien(self, current_x, y):
-        new_alien = Alien(self, current_x, y)
+        if fleet_height % 2 == 0:
+            fleet_height -= 1
+        else:
+            fleet_height -= 2
+
+        return int(fleet_width), int(fleet_height)
+        
+    def _create_alien(self, current_x: int, current_y: int):
+        new_alien = Alien(self, current_x, current_y)
         self.fleet.add(new_alien)
 
     def draw(self):

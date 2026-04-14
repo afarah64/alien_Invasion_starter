@@ -9,6 +9,7 @@ import pygame
 from settings import Settings
 from ship import Ship
 from arsenal import Arsenal
+from alien import Alien
 
 class AlienInvasion:
     """Overall class to manage game assets and behavior."""
@@ -48,6 +49,8 @@ class AlienInvasion:
         # Create an instance of the Ship class and store it in the ship attribute.
         self.ship = Ship(self, Arsenal(self))
 
+        self.alien = Alien(self, 10, 10)
+
 
 
     def run_game(self):
@@ -57,6 +60,8 @@ class AlienInvasion:
             self._check_events()
             # Update the ship's position based on the movement flags.
             self.ship.update()
+            # Update the bullet's position.
+            self.alien.update()
             # Update the screen during each pass through the loop.
             self._update_screen()
             # Limit the frame rate to the value specified in settings.
@@ -66,6 +71,8 @@ class AlienInvasion:
         """Update images on the screen, and flip to the new screen.
         """
         self.screen.blit(self.bg_image, (0, 0))
+
+        self.alien.draw_alien()
         # Draw the ship to the screen.
         self.ship.draw()
         # Redraw the screen during each pass through the loop.

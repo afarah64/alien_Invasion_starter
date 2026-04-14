@@ -7,10 +7,13 @@
 import sys
 import pygame
 from settings import Settings
+from game_stats import GameStats
 from ship import Ship
 from arsenal import Arsenal
 # from alien import Alien
 from alien_fleet import AlienFleet
+from time import sleep
+
 
 class AlienInvasion:
     """Overall class to manage game assets and behavior."""
@@ -22,6 +25,7 @@ class AlienInvasion:
 
         # Create an instance of the Settings class and store it in the settings attribute.
         self.settings = Settings()
+        self.game_stats = GameStats(self.settings.starting_ship_count)
         
         # Set up the display window and caption.
         self.screen = pygame.display.set_mode(
@@ -55,7 +59,8 @@ class AlienInvasion:
         self.ship = Ship(self, Arsenal(self))
 
         self.alien_fleet = AlienFleet(self)
-        self.alien_fleet.create_fleet() 
+        self.alien_fleet.create_fleet()
+        self.game_active = True 
 
 
 
@@ -64,11 +69,12 @@ class AlienInvasion:
         while self.running:
             # Watch for keyboard and mouse events.
             self._check_events()
-            # Update the ship's position based on the movement flags.
-            self.ship.update()
-            self.alien_fleet.update_fleet()
-            self._check_collisions()
-            # Update the screen during each pass through the loop.
+            if self.game_active:
+                # Update the ship's position based on the movement flags.
+                self.ship.update()
+                self.alien_fleet.update_fleet()
+                self._check_collisions()
+                # Update the screen during each pass through the loop.
             self._update_screen()
             # Limit the frame rate to the value specified in settings.
             self.clock.tick(self.settings.FPS)
@@ -76,13 +82,13 @@ class AlienInvasion:
     def _check_collisions(self):
         #check collisions for ship
         if self.ship.check_collisions(self.alien_fleet.fleet):
-            self._reset_level()
+            self._check_game_status()
              
         #subtract one lif if possible
        
         #check collisions for aliens and bottom of screen
         if self.alien_fleet.check_fleet_bottom():
-            self._reset_level()
+            self._check_game_status()
         
         #check collision of projectiles and aliens
         collisions = self.alien_fleet.check_collisions(self.ship.arsenal.arsenal)
@@ -92,6 +98,16 @@ class AlienInvasion:
         
         if self.alien_fleet.check_destroyed_status(): 
             self._reset_level()   
+
+    def _check_game_status(self):
+        if self.game_stats.ships_left > 0:
+            self.game_stats.ships_left -=1
+            self._reset_level()
+            sleep(0.5)
+        else:
+            self.game_active = False
+        
+
 
     def _reset_level(self):
 

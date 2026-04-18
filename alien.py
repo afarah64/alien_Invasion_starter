@@ -1,3 +1,7 @@
+"""Define the Alien class used in the Alien Invasion game.
+Each alien is a sprite that moves horizontally and interacts
+with screen boundaries
+"""
 import pygame
 from pygame.sprite import Sprite
 
@@ -33,7 +37,9 @@ class Alien(Sprite):
         self.x = float(self.rect.x)
 
     def update(self):
-
+        """Update the alien's horizontal position.
+        Moves the alien left or right depending on the fleet's direction.
+        """
         temp_speed = self.settings.fleet_speed
         
         self.x += temp_speed * self.fleet.fleet_direction
@@ -41,6 +47,11 @@ class Alien(Sprite):
         self.rect.y = int(self.y)
 
     def check_edges(self):
+        """Check whether the alien has reached a screen edge.
+
+        Returns:
+            bool: True if the alien touches the left or right edge.
+        """
         return (self.rect.right >= self.boundaries.right or self.rect.left <= self.boundaries.left)
         
 

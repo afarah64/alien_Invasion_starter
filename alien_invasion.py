@@ -1,9 +1,7 @@
-""" Alien Invasion - A simple 2D game where the player controls a spaceship to defend against alien invaders.
+""" this main module for the game Alien Invasion - A simple 2D game where the player controls a spaceship to defend against alien invaders.
     Author: Abdalla Farah
-    Date: 04/10/2026
+    Date: 04/17/2026
 """
-
-
 import sys
 import pygame
 from settings import Settings
@@ -65,7 +63,10 @@ class AlienInvasion:
 
 
     def run_game(self):
-        #Game loop
+        """Starts and manages the main game loop.
+        it continues process the user input, update game objecs,
+        checks for collisions, and refreshes the display unitl th egame is exited
+        """
         while self.running:
             # Watch for keyboard and mouse events.
             self._check_events()
@@ -80,17 +81,19 @@ class AlienInvasion:
             self.clock.tick(self.settings.FPS)
 
     def _check_collisions(self):
-        #check collisions for ship
+        """Handles all collision detection in the game.
+        checks:
+            -Ship collisions with aliens.
+            -Aliens reaching the bottom of the screen
+            -Projectile collisions with aliens
+            -Whether all aiens being destroyed
+        """
         if self.ship.check_collisions(self.alien_fleet.fleet):
             self._check_game_status()
              
-        #subtract one lif if possible
-       
-        #check collisions for aliens and bottom of screen
         if self.alien_fleet.check_fleet_bottom():
             self._check_game_status()
         
-        #check collision of projectiles and aliens
         collisions = self.alien_fleet.check_collisions(self.ship.arsenal.arsenal)
         if collisions:
             self.impact_sound.play()
@@ -100,6 +103,10 @@ class AlienInvasion:
             self._reset_level()   
 
     def _check_game_status(self):
+        """Update game status based on remaining lives.
+        decreases ship count when a collision occurs.
+        Ends the game if no ships remain
+        """
         if self.game_stats.ships_left > 0:
             self.game_stats.ships_left -=1
             self._reset_level()
@@ -110,6 +117,9 @@ class AlienInvasion:
 
 
     def _reset_level(self):
+        """Reset the current level state.
+        Clears all bullets and aliens, then recreates the fleet.
+        """
 
         self.ship.arsenal.arsenal.empty()
         self.alien_fleet.fleet.empty()
@@ -128,7 +138,7 @@ class AlienInvasion:
         pygame.display.flip()
 
     def _check_events(self):
-        """Respond to keypresses and mouse events."""
+        """Respond to keypresses and Window events."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False

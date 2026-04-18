@@ -1,3 +1,7 @@
+"""Define the ship class for the player-controlled spacecraft.
+This ship moves Horizontally along the bottom of the screen and 
+can fire bullets to destroy aliens
+"""
 import pygame
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
@@ -9,7 +13,12 @@ class Ship:
     """A class to manage the ship."""
 
     def __init__(self, game: 'AlienInvasion', arsenal: 'Arsenal') -> None:
-        """Initialize the ship and set its starting position."""
+        """Initialize the ship and its starting position.
+
+        Args:
+            game (AlienInvasion): The main game instance
+            arsenal (Arsenal): The ship's bullet manager.
+        """
         self.game = game
         self.settings = game.settings
         self.screen = game.screen
@@ -36,12 +45,12 @@ class Ship:
         self.arsenal = arsenal
 
     def _center_ship(self):
-        """ centers the ship """
+        """ centers the ship at bottom of the screen"""
         self.rect.midbottom = self.boundaries.midbottom
         self.x = float(self.rect.x)
 
     def update(self):
-        """Update the ship's position based on the movement flags."""
+        """Update the ship's position and its arsenal based on the movement flags."""
         self._update_ship_movement()
         self.arsenal.update_arsenal()
 
@@ -60,15 +69,27 @@ class Ship:
 
 
     def draw(self):
-        """Draw the ship at its current location."""
+        """Draw the ship at its bullets on the screen."""
         self.arsenal.draw()
         self.screen.blit(self.image, self.rect) 
     
     def fire(self):
-        """Fire a bullet if limit not reached yet."""
+        """Fire a bullet if the limit has not been reached.
+
+        Returns:
+            bool: True if a bullet was fired, False otherwise.
+        """
         return self.arsenal.fire_bullet()
         
     def check_collisions(self, other_group):
+        """Check for collision with another sprite group.
+
+        Args:
+            other_group (pygame.sprite.Group): Group to check collisions with.
+
+        Returns:
+            bool: True if a collision occurs, False otherwise.
+        """
         if pygame.sprite.spritecollideany(self, other_group,):
             self._center_ship()
             return True 

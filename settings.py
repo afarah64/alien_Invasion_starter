@@ -16,7 +16,7 @@ class Settings:
 
         # Background settings
         self.bg_file = Path.cwd() / 'Assets' / 'images' / 'Starbasesnow.png'
-        self.difficult_scale = 1.1
+        self.difficulty_scale = 1.1
 
         # Ship settings
         self.ship_file = Path.cwd() / 'Assets' / 'images' / 'ship2(no bg).png'
@@ -55,6 +55,8 @@ class Settings:
         
         self.fleet_speed = 2
         self.fleet_drop_speed = 40
+        self.alien_points = 50
+
 
     def increase_difficulty(self):
         self.ship_speed *= self.difficulty_scale

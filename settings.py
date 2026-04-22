@@ -16,14 +16,12 @@ class Settings:
 
         # Background settings
         self.bg_file = Path.cwd() / 'Assets' / 'images' / 'Starbasesnow.png'
+        self.difficult_scale = 1.1
 
         # Ship settings
         self.ship_file = Path.cwd() / 'Assets' / 'images' / 'ship2(no bg).png'
         self.ship_width = 40
         self.ship_height = 60
-        # Speed settings
-        self.ship_speed = 5
-        self.starting_ship_count = 3
 
         # Bullet settings
         self.bullet_file = Path.cwd() / 'Assets' / 'images' / 'laserBlast.png'
@@ -31,17 +29,11 @@ class Settings:
         
         self.impact_sound = Path.cwd() / 'Assets' / 'sound' / 'impactSound.mp3'
 
-        self.bullet_speed = 7
-        self.bullet_width = 25
-        self.bullet_height = 80
-        self.bullets_amount = 5
 
         self.alien_file = Path.cwd() / 'Assets' / 'images' / 'enemy_4.png'
         self.alien_width = 40
         self.alien_height = 40
-        self.fleet_speed = 2
         self.fleet_direction = 1
-        self.fleet_drop_speed = 40
 
         self.botton_width = 200
         self.botton_height = 50
@@ -52,6 +44,23 @@ class Settings:
         self.HUD_font_size = 20
         self.font_file = Path.cwd() / 'Assets' / 'fonts' / 'Silkscreen' / 'Silkscreen-bold.ttf'
 
+    def initialize_dynamic_settings(self):
+        self.ship_speed = 5
+        self.starting_ship_count = 3
+
+        self.bullet_width = 25
+        self.bullet_height = 80
+        self.bullet_speed = 7
+        self.bullets_amount = 5
         
+        self.fleet_speed = 2
+        self.fleet_drop_speed = 40
+
+    def increase_difficulty(self):
+        self.ship_speed *= self.difficulty_scale
+        self.bullet_speed *= self.difficulty_scale
+        self.fleet_speed *= self.difficulty_scale
+
+         
         
         

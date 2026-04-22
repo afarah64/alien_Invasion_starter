@@ -24,6 +24,8 @@ class AlienInvasion:
 
         # Create an instance of the Settings class and store it in the settings attribute.
         self.settings = Settings()
+        self.settings.initialize_dynamic_settings()
+        
         self.game_stats = GameStats(self.settings.starting_ship_count)
         
         # Set up the display window and caption.

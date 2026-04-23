@@ -17,6 +17,7 @@ class Settings:
         # Background settings
         self.bg_file = Path.cwd() / 'Assets' / 'images' / 'Starbasesnow.png'
         self.difficulty_scale = 1.1
+        self.scores_file = Path.cwd() / 'Assets' / 'file' / 'scores.json'
 
         # Ship settings
         self.ship_file = Path.cwd() / 'Assets' / 'images' / 'ship2(no bg).png'

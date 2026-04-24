@@ -1,6 +1,6 @@
 """ this main module for the game Alien Invasion - A simple 2D game where the player controls a spaceship to defend against alien invaders.
     Author: Abdalla Farah
-    Date: 04/17/2026
+    Date: 04/24/2026
 """
 import sys
 import pygame
@@ -188,6 +188,7 @@ class AlienInvasion:
                 self._check_button_clicked()
 
     def _check_button_clicked(self):
+        """Check if the play button has been clicked, and if so, start a new game."""
         mouse_pos = pygame.mouse.get_pos()
         if self.play_button.check_clicked(mouse_pos):            
             self.restart_game()
